@@ -1,0 +1,479 @@
+// Honestly I don't even know how many of these imports are used
+// I should probably clean this up at some point
+#include <iostream>
+#include <cstdlib>
+#include <sstream>
+#include <math.h>
+#include <iomanip>
+#include <cstdio>
+
+// Because typing std::everything gets tiring
+using namespace std;
+
+// Method to output a simple 100 character wide divider
+void divider()
+{
+
+    for(int i = 0; i < 100; i++)
+    {
+
+        cout << "~";
+
+    }
+
+    cout << endl;
+
+}
+
+// Method to output spaces required to align the text in the center
+void spacing(string text)
+{
+
+    // Define the length of one line to be 100 characters and thus calculate spaces required
+    int length = 100;
+    int spaces = (length - text.length()) / 2;
+
+    // Iterate through the number of spaces required, and output blank spaces
+    for(int i = 0; i < spaces; i++)
+    {
+        cout << " ";
+    }
+
+    // Output the text and then the endline
+    cout << text << endl;
+
+}
+
+// Overloaded method identical in purpose to the previous one but without a newline
+// Meant for input statements where we want the input inline; hence the integer parameter that is meant to be the assumed length of the user's input
+// I might honestly just remove that and have a boolean because it doesn't make enough of a difference and makes little practical sense
+// Refer to above method for explanation
+void spacing(string text, int input)
+{
+
+    int length = 100;
+    int spaces = (length - (text.length() + input)) / 2;
+
+    for(int i = 0; i < spaces; i++)
+    {
+        cout << " ";
+    }
+
+    cout << text;
+
+}
+
+// Method so I don't have to use blank cout << statements and can be consistent in usage of spacing
+// The code must be A E S T H E T I C
+void spacing()
+{
+
+    cout << endl;
+
+}
+
+// Adding Integers Method
+void addingIntegers()
+{
+
+    // Set up variables
+    int input;
+    int sum = 0;
+
+    // Begin Welcome
+    divider();
+    spacing();
+    spacing("Welcome to the Adding Integers method!");
+    spacing();
+
+    // Prompt, receive input
+    spacing("Please enter the first integer (0 to quit): ", 1);
+    cin >> input;
+
+    // Perform the required calculation
+    sum += input;
+    spacing();
+
+    // Check if the first input is already zero
+    if(input == 0)
+    {
+        spacing("You have not entered any integers.");
+    }
+
+    else
+    {
+        do
+        {
+
+            // As above; the only reason the above statement is not within the loop body is to check for the zero case
+            spacing("Please enter the next integer (0 to quit): ", 1);
+            cin >> input;
+            sum += input;
+            spacing();
+
+        }
+
+        // Loop will continue until the sentinel is hit (if user enters 0)
+        while(input != 0);
+
+        // Output result, using an ostringstream to concatenate string and int types
+        ostringstream output;
+        output << "The sum of all entered integers was: " << sum;
+        spacing(output.str());
+
+    }
+
+    spacing("The method will now terminate.");
+    spacing();
+
+
+}
+
+// Miles per Gallon Method
+void milesPerGallon()
+{
+
+    // Set up variables
+    int initial = 1;
+    int final;
+    int gallons;
+    double mpg;
+
+    // Begin welcome
+    divider();
+    spacing();
+    spacing("Welcome to the Miles per Gallon program!");
+    spacing();
+
+    // Loop
+    do
+    {
+        // Prompt and input for initial miles
+        spacing("Initial Miles: ", 5);
+        cin >> initial;
+        spacing();
+
+        // Verify that termination is not required
+        if(initial > 0)
+        {
+
+            // Prompt and input for final miles
+            spacing("Final Miles: ", 5);
+            cin >> final;
+            spacing();
+
+            // Prompt and input for gallons
+            spacing("Gallons: ", 2);
+            cin >> gallons;
+            spacing();
+
+            // Calculate miles per gallon
+            mpg = (final - initial) / (double) gallons;
+            spacing();
+
+            // Create an ostringstream for easier output
+            ostringstream output;
+            output << "Miles per Gallon: " << mpg;
+            spacing(output.str());
+            spacing();
+
+        }
+
+    }
+
+    // Loop ends with an initial reading of less than 0 is entered
+    while(initial > 0);
+
+    spacing("The method will now terminate.");
+    spacing();
+
+}
+
+// In Range Adder Method
+void inRangeAdder()
+{
+
+    // Set up variables
+    int input = -1;
+    int sumInRange = 0;
+    int sumOutRange = 0;
+    int top;
+    int bottom;
+
+    // Begin Welcome
+    divider();
+    spacing();
+    spacing("Welcome to the In Range Adder Program!");
+    spacing();
+
+    // Prompt and input for the range bounds
+    spacing("Enter the top bound for the range: ", 2);
+    cin >> top;
+    spacing();
+
+    spacing("Enter the bottom bound for the range: ", 2);
+    cin >> bottom;
+    spacing();
+
+    while(input != 0)
+    {
+
+        // Prompt and input for the values
+        spacing("Enter a value: ", 2);
+        cin >> input;
+        spacing();
+
+        // If the value is in range
+        if(input > bottom && input < top)
+        {
+            sumInRange += input;
+        }
+
+        // If the value is not in range
+        else
+        {
+            sumOutRange += input;
+        }
+
+    }
+
+    // Create ostringstreams for the output
+    ostringstream output;
+    output << "Sum of in range values: " << sumInRange;
+    spacing(output.str());
+
+    // Reset the ostrinstream for the second line of output
+    output.str("");
+    output << "Sum of out of range values: " << sumOutRange;
+    spacing(output.str());
+
+    spacing();
+    spacing("The method will now terminate.");
+    spacing();
+
+}
+
+// Shipping Cost Method
+void shippingCost()
+{
+
+    // Set up variables
+    int weight = 1;
+
+    // Begin welcome
+    divider();
+    spacing();
+    spacing("Welcome to the Shipping Cost Program!");
+    spacing();
+
+    while(weight > 0)
+    {
+
+        // Prompt and input weight
+        spacing("Weight (in pounds): ", 2);
+        cin >> weight;
+        spacing();
+
+        // Verify that the weight is over 0
+        if(weight > 0)
+        {
+
+            // Add base $3 handling fee
+            double cost = 3;
+
+            // Only pay for shipping if weight is over 10 pounds
+            if(weight > 10)
+            {
+                cost += (.25 * (weight - 10));
+            }
+
+            // Output results (again, using an ostringstream)
+            ostringstream output;
+            output << "The shipping cost is: $";
+
+            // Use a character array instead of a string to use sprintf for formatting purposes
+            char outputFormat[100];
+            sprintf(outputFormat, "%.2f", cost);
+            output << outputFormat;
+
+            // Actually display it
+            spacing(output.str());
+            spacing();
+
+        }
+
+    }
+
+    spacing("The method will now terminate.");
+    spacing();
+
+}
+
+// Hailstone Numbers Method
+void hailstoneNumbers()
+{
+
+    // Set up variables
+    int num = -1;
+    int length = 0;
+    int max = 0;
+
+    // Begin Welcome
+    divider();
+    spacing();
+    spacing("Welcome to the Hailstone Numbers program!");
+    spacing();
+
+    // Have a loop to verify that the value read is valid
+    while(num < 0)
+    {
+
+        // Prompt and receive input
+        spacing("Enter a positive integer N: ", 2);
+        cin >> num;
+        spacing();
+
+        // Display error message if necessary
+        if(num < 0)
+        {
+            spacing("Your value was not valid, please try again. ");
+            spacing();
+        }
+
+    }
+
+    // Actual loop for the calculations; terminates when the number reaches 1
+    while(num != 1)
+    {
+
+        // Create an ostringstream for the output;
+        ostringstream output;
+        output << "Current value is: " << num;
+        spacing(output.str());
+
+        // if N is even, the new N is N/2
+        if(num % 2 == 0)
+        {
+            num = num/2;
+        }
+
+        // if N is odd, the new N is 3*N + 1
+        else
+        {
+            num = 3*num + 1;
+        }
+
+        // Check if the number is greater than the current maximum and set if necessary
+        if(num > max)
+        {
+            max = num;
+        }
+
+        // Increment length counter
+        length++;
+
+    }
+
+    spacing();
+
+    // Again, create ostringstream for output
+    ostringstream output;
+    output << "The maximum value was: " << max;
+    spacing(output.str());
+
+    // Reset the ostringstream and repeat
+    output.str("");
+    output << "The length of the sequence is: " << length;
+    spacing(output.str());
+
+    spacing();
+    spacing("The method will now terminate.");
+    spacing();
+
+}
+
+// Main method
+int main()
+{
+
+    // Store the input variable
+    int input = -1;
+
+    // Provided the input isn't zero, output the menu
+    while (input != 0)
+    {
+
+        divider();
+        spacing();
+        spacing("TER4M1");
+        spacing("Problem Set 2");
+        spacing("Kai Huang");
+        spacing();
+        divider();
+        spacing();
+        spacing("Pick an option:");
+        spacing("1. Adding Integers");
+        spacing("2. Miles per Gallon");
+        spacing("3. In Range Adder");
+        spacing("4. Shipping Cost Calculator");
+        spacing("5. Hailstone Numbers");
+        spacing();
+        spacing("0. Exit Program");
+        spacing();
+
+        // Read the input
+        cin >> input;
+
+        if (input == 1)
+        {
+            // Call the method for adding integers and then prompt the user to hit any key
+            addingIntegers();
+            system("pause");
+        }
+
+        else if (input == 2)
+        {
+            // Call the method for miles per gallon and then prompt the user to hit any key
+            milesPerGallon();
+            system("pause");
+        }
+
+        else if (input == 3)
+        {
+            // Call the method for in range adder and then prompt the user to hit any key
+            inRangeAdder();
+            system("pause");
+        }
+
+        else if (input == 4)
+        {
+            // Call the method for shipping cost and then prompt the user to hit any key
+            shippingCost();
+            system("pause");
+        }
+
+        else if(input == 5)
+        {
+            // Call the method for hailstone numbers and prompt the user to hit any key
+            hailstoneNumbers();
+            system("pause");
+        }
+
+        // If the input entered didn't fall into one of the above categories...
+        // ... and yet is not zero, alert the user of invalidity
+        else if (input != 0)
+        {
+            spacing("Invalid Response.");
+            system("pause");
+        }
+
+        // If it is indeed a zero, then exit
+        else
+        {
+            spacing("Fare thee well.");
+            system("pause");
+        }
+
+    }
+
+}
