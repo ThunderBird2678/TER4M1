@@ -1,0 +1,358 @@
+// Honestly I don't even know how many of these imports are used
+// I should probably clean this up at some point
+#include <iostream>
+#include <cstdlib>
+#include <sstream>
+#include <math.h>
+#include <iomanip>
+#include <cstdio>
+#include <limits.h>
+#include <conio.h>
+
+// Because typing std::everything gets tiring
+using namespace std;
+ostringstream output;
+
+// Method to output a simple 100 character wide divider
+void divider()
+{
+
+    for(int i = 0; i < 100; i++)
+    {
+
+        cout << "~";
+
+    }
+
+    cout << endl;
+
+}
+
+// Method to output spaces required to align the text in the center
+void spacing(string text)
+{
+
+    // Define the length of one line to be 100 characters and thus calculate spaces required
+    int length = 100;
+    int spaces = (length - text.length()) / 2;
+
+    // Iterate through the number of spaces required, and output blank spaces
+    for(int i = 0; i < spaces; i++)
+    {
+        cout << " ";
+    }
+
+    // Output the text and then the endline
+    cout << text << endl;
+
+}
+
+// Overloaded method identical in purpose to the previous one but without a newline
+// Meant for input statements where we want the input inline; hence the integer parameter that is meant to be the assumed length of the user's input
+// I might honestly just remove that and have a boolean because it doesn't make enough of a difference and makes little practical sense
+// Refer to above method for explanation
+void spacing(string text, int input)
+{
+
+    int length = 100;
+    int spaces = (length - (text.length() + input)) / 2;
+
+    for(int i = 0; i < spaces; i++)
+    {
+        cout << " ";
+    }
+
+    cout << text;
+
+}
+
+// Method so I don't have to use blank cout << statements and can be consistent in usage of spacing
+// The code must be A E S T H E T I C
+void spacing()
+{
+
+    cout << endl;
+
+}
+
+// Method to write the generic introduction I use to every method
+void intro(string name)
+{
+    divider();
+    spacing();
+    spacing("Welcome to the " + name + "program!");
+    spacing();
+}
+
+// Method to reset the ostringstream used for the output
+void outputReset()
+{
+    output.str("");
+}
+
+void getchSpaced()
+{
+    spacing("Press any key to continue.");
+    getch();
+}
+
+// Method to set up the input of integers within a specified range
+// The maximum value is defined currently as the maximum integer value
+int getInt(int low, int high = INT_MAX)
+{
+
+    // Set up the input variable, set it so that it triggers the errorchecking loop
+    int input;
+
+    do
+    {
+
+        // Prompt for, receive the input
+        outputReset();
+        output << "Enter a number between " << low << " and " << high << ": ";
+        spacing(output.str());
+
+        cin >> input;
+
+        spacing();
+        spacing();
+
+        // If the number is not within the range, output an error message
+        if(input < low || input > high)
+        {
+            spacing("The number you entered was not within the range.");
+            spacing("Please try again.");
+        }
+
+    }
+    while(input < low || input > high);
+
+    // Once the errorchecking loop is finished, we know that the number must be valid
+    // Thus it is returned
+    return input;
+
+}
+
+// The Sum Limit Program
+int sumLimit(int input)
+{
+
+    // Set up variable
+    int sum = 0;
+
+    // Loop through, adding up the values
+    for(int i = 1; i <= input; i++)
+    {
+        sum += i;
+    }
+
+    // Return the result
+    return sum;
+
+}
+
+// Driver method for sumLimit
+void sumLimitDriver()
+{
+
+    // Set up variable
+    int input;
+
+    // Generic Introduction
+    intro("Sum Limit");
+
+    // Get the input
+    input = getInt(0, 113511);
+
+    // Call sumLimit() with the input and output the result
+    outputReset();
+    output << "The sum of the numbers from 1 to " << input << " is: " << sumLimit(input) << ".";
+    spacing(output.str());
+    spacing();
+
+}
+
+// The Prime Program
+bool prime(int input)
+{
+
+    // Set up variables
+    bool result = false;
+    int counter = 0;
+
+    for(int i = 1; i < sqrt(input); i++)
+    {
+
+        if(input % i == 0)
+        {
+            counter++;
+        }
+
+    }
+
+    if(counter == 1)
+    {
+        result = true;
+    }
+
+    return result;
+
+}
+
+// The Driver Method for prime
+void primeDriver()
+{
+
+    // Set up variables
+    int input;
+
+    // Generic intro
+    intro("Prime");
+
+    // Get the input
+    input = getInt(0);
+
+    // Output the results
+
+    if(prime(input))
+    {
+        spacing("The number is prime.");
+    }
+
+    else
+    {
+        spacing("The number is not prime.");
+    }
+
+}
+
+double quadratic(int a, int b, int c, double& x1, double& x2, bool& valid)
+{
+    // First verify that the discriminant is greater than zero
+    if((pow(b, 2) - 4*a*c) > 0)
+    {
+
+        // Set the validity flag to true
+        valid = true;
+
+        // Simply apply the quadratic formula to the two roots
+        x1 = ((b*-1) - sqrt((pow(b, 2) - 4*a*c))) / (2*a);
+        x2 = ((b*-1) + sqrt((pow(b, 2) - 4*a*c))) / (2*a);
+    }
+
+}
+
+void quadraticDriver()
+{
+
+    // Set up variables
+    int a, b, c;
+    double x1, x2;
+    bool valid = false;
+
+    // Generic Intro
+    intro("Quadratic");
+
+    // Get all the coefficients
+    spacing("In the format Ax^2 + Bx + C");
+    spacing("For A: ");
+    a = getInt(INT_MIN);
+
+    spacing("For B: ");
+    b = getInt(INT_MIN);
+
+    spacing("For C: ");
+    c = getInt(INT_MIN);
+
+    // Call the method
+    quadratic(a, b, c, x1, x2, valid);
+
+    // Output the results
+    if(valid)
+    {
+
+        outputReset();
+        output << "The two roots are: x = " << x1 << " and x = " << x2 << ".";
+        spacing(output.str());
+
+    }
+
+    else
+    {
+
+        spacing("There are no real roots.");
+
+    }
+
+
+}
+
+// Main method
+int main()
+{
+
+    // Store the input variable
+    int input = -1;
+
+    // Provided the input isn't zero, output the menu
+    while (input != 0)
+    {
+
+        divider();
+        spacing();
+        spacing("TER4M1");
+        spacing("Problem Set 4");
+        spacing("Kai Huang");
+        spacing();
+        divider();
+        spacing();
+        spacing("Pick an option:");
+        spacing("1. Sum Limit");
+        spacing("2. Prime");
+        spacing("3. Quadratic");
+        spacing();
+        spacing("0. Exit Program");
+        spacing();
+
+        // Read the input
+        cin >> input;
+
+        if (input == 1)
+        {
+            // Call the method for Sum Limit program and then prompt the user to hit any key
+            sumLimitDriver();
+            getchSpaced();
+        }
+
+        else if (input == 2)
+        {
+            // Call the method for prime program and then prompt the user to hit any key
+            primeDriver();
+            getchSpaced();
+        }
+
+        else if (input == 3)
+        {
+            // Call the method for quadratic program and then prompt the user to hit any key
+            quadraticDriver();
+            getchSpaced();
+        }
+
+        // If the input entered didn't fall into one of the above categories...
+        // ... and yet is not zero, alert the user of invalidity
+        else if (input != 0)
+        {
+            spacing("Invalid Response.");
+            system("pause");
+        }
+
+        // If it is indeed a zero, then exit
+        else
+        {
+            spacing("Fare thee well.");
+            getchSpaced();
+        }
+
+    }
+
+}
