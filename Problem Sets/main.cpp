@@ -1,0 +1,634 @@
+// Honestly I don't even know how many of these imports are used
+// I should probably clean this up at some point
+#include <iostream>
+#include <cstdlib>
+#include <sstream>
+#include <math.h>
+#include <iomanip>
+#include <cstdio>
+#include <limits.h>
+#include <conio.h>
+
+// Because typing std::everything gets tiring
+using namespace std;
+ostringstream output;
+
+// Method to output a simple 100 character wide divider
+void divider()
+{
+
+    for(int i = 0; i < 100; i++)
+    {
+
+        cout << "~";
+
+    }
+
+    cout << endl;
+
+}
+
+// Method to output spaces required to align the text in the center
+void spacing(string text)
+{
+
+    // Define the length of one line to be 100 characters and thus calculate spaces required
+    int length = 100;
+    int spaces = (length - text.length()) / 2;
+
+    // Iterate through the number of spaces required, and output blank spaces
+    for(int i = 0; i < spaces; i++)
+    {
+        cout << " ";
+    }
+
+    // Output the text and then the endline
+    cout << text << endl;
+
+}
+
+// Overloaded method identical in purpose to the previous one but without a newline
+// Meant for input statements where we want the input inline; hence the integer parameter that is meant to be the assumed length of the user's input
+// I might honestly just remove that and have a boolean because it doesn't make enough of a difference and makes little practical sense
+// Refer to above method for explanation
+void spacing(string text, int input)
+{
+
+    int length = 100;
+    int spaces = (length - (text.length() + input)) / 2;
+
+    for(int i = 0; i < spaces; i++)
+    {
+        cout << " ";
+    }
+
+    cout << text;
+
+}
+
+// Method so I don't have to use blank cout << statements and can be consistent in usage of spacing
+// The code must be A E S T H E T I C
+void spacing()
+{
+
+    cout << endl;
+
+}
+
+// Method to write the generic introduction I use to every method
+void intro(string name)
+{
+    divider();
+    spacing();
+    spacing("Welcome to the " + name + " program!");
+    spacing();
+}
+
+// Method to reset the ostringstream used for the output
+void outputReset()
+{
+    output.str("");
+}
+
+// Method so even the get character prompt is A E S T H E T I C
+void getchSpaced()
+{
+    spacing("Press any key to continue.");
+    getch();
+}
+
+// The Fill Method
+int* fill(int *array, int &size)
+{
+
+    // Set up a temporary array of desired size
+    int* temp = new int[size];
+
+    // Iterate through the values of the new array
+    for(int i = 0; i < size; i++)
+    {
+        // Generate random number between 1 and 10 inclusive
+        temp[i] =  (rand() % 10) + 1;
+    }
+
+    delete [] array;
+    return temp;
+
+}
+
+// Driver for the fill method
+int* fillDriver(int* array, int &size)
+{
+
+    // Generic introduction
+    intro("Fill");
+    divider();
+    spacing();
+
+    // Prompt for and receive size
+    spacing("What is your desired array size? :", 2);
+    cin >> size;
+
+    spacing();
+
+    // Call the proper method
+    array = fill(array, size);
+
+    // Tell user that method has finished
+    spacing("Operation complete");
+    spacing();
+
+    return array;
+
+}
+
+// The average method
+int average(int* array, int &size)
+{
+
+    // Initialize variable
+    int total = 0;
+
+    // Iterate through array and find total
+    for(int i = 0; i < size; i++)
+    {
+        total += array[i];
+    }
+
+    // Return the calculated average
+    double avg = total/size;
+    return (avg);
+
+}
+
+// The driver for the average method
+void averageDriver(int* array, int &size)
+{
+
+    // Verify that the size is greater than 0
+    if(size > 0)
+    {
+
+        // Generic Introduction
+        intro("Average");
+        divider();
+        spacing();
+
+        // Output Result
+        outputReset();
+        output << "The average of the values in the array is: " << average(array, size);
+        spacing(output.str());
+        spacing();
+
+    }
+
+    else
+    {
+        spacing("Error: Array is empty");
+    }
+
+
+}
+
+// The min method
+int min(int* array, int &size)
+{
+
+    // Set initial minimum to max int value to ensure it gets overwritten
+    int minimum = INT_MAX;
+
+    // Iterate through the array
+    for(int i = 0; i < size; i++)
+    {
+
+        // Check if the value is less than the current minimum and replace current minimum value if necessary
+        if(array[i] < minimum)
+        {
+            minimum = array[i];
+        }
+
+    }
+
+    return minimum;
+
+}
+
+// The driver for the min method
+void minDriver(int* array, int &size)
+{
+
+    // Verify that the array is not empty
+    if(size > 0)
+    {
+
+        // Generic Introduction
+        intro("Minimum");
+        divider();
+        spacing();
+
+        // Output Result
+        outputReset();
+        output << "The minimum value in the array is: " << min(array, size);
+        spacing(output.str());
+        spacing();
+
+    }
+
+    // Inform user that array is empty
+    else
+    {
+        spacing("Error: The array is empty.");
+    }
+
+}
+
+// The max method
+int max(int* array, int &size)
+{
+
+    // Set initial maximum to min int value to ensure it gets overwritten
+    int maximum = INT_MIN;
+
+    // Iterate through the array
+    for(int i = 0; i < size; i++)
+    {
+
+        // Check if the value is greater than the current maximum and replace current maximum value if necessary
+        if(array[i] > maximum)
+        {
+            maximum = array[i];
+        }
+
+    }
+
+    // Return the necessary value
+    return maximum;
+
+}
+
+// The driver for the max method
+void maxDriver(int* array, int &size)
+{
+
+    // Verify that array is not empty
+    if(size > 0)
+    {
+
+        // Generic Introduction
+        intro("Maximum");
+        divider();
+        spacing();
+
+        // Output Result
+        outputReset();
+        output << "The maximum value in the array is: " << max(array, size);
+        spacing(output.str());
+        spacing();
+
+    }
+
+    else
+    {
+        spacing("Error: The array is empty.");
+    }
+
+}
+
+// The search method
+// Note that I'm using a simple linear search because I'm too lazy to write a binary search
+int search(int* array, int &size, int value)
+{
+
+    // Initialize the variable
+    int index = -1;
+
+    // Verify that the array is not empty
+    if(size > 0)
+    {
+
+        // Iterate through array
+        for(int i = 0; i < size; i++)
+        {
+
+            // Check if the value corresponds
+            if(array[i] == value)
+            {
+                index = i;
+            }
+
+        }
+
+    }
+
+    return index;
+
+}
+
+// The driver for the search method
+void searchDriver(int* array, int &size)
+{
+
+    // Initialize value variable
+    int value;
+
+    // Generic Intro
+    intro("Search");
+    divider();
+    spacing();
+
+    // Prompt and receive input
+    spacing("What is the value you are searching for? :", 2);
+    cin >> value;
+    spacing();
+
+    // Run the method and check if the value exists
+    if(search(array, size, value) == -1)
+    {
+        spacing("The value you searched for was not present in the array.");
+    }
+
+        // If the value is verified to exist
+    else
+    {
+        outputReset();
+        output << "The value you searched for was present at index: " << search(array, size, value);
+        spacing(output.str());
+    }
+
+}
+
+// AddItem method
+int* addItem(int* array, int &size, int value)
+{
+
+    // Initialize a new temporary array
+    int* temp = new int[size+1];
+
+    // Loop through the array and copy the values
+    for(int i = 0; i < size; i++)
+    {
+        temp[i] = array[i];
+    }
+
+    // Set in the new value in the last spot and reset size
+    temp[size] = value;
+    size++;
+
+    // Clear out the old array and return new temporary array
+    delete[] array;
+    return temp;
+
+}
+
+// Driver for the AddItem method
+int* addItemDriver(int* array, int&size)
+{
+
+    // Initialize the variables
+    int value;
+
+    // Generic Intro
+    intro("Add Item");
+    divider();
+    spacing();
+
+    // Prompt for and receive value
+    spacing("What value would you like to append? :");
+    cin >> value;
+
+    // Run the method with given value, output confirmation, and return new array
+    array = addItem(array, size, value);
+    spacing("Operation complete.");
+    spacing();
+
+    return array;
+
+}
+
+// RemoveItem method
+int* removeItem(int* array, int &size)
+{
+
+    int* temp;
+
+    // Check if array is empty and if so, return it direct
+    if(size == 0)
+    {
+        // Initialize a new temporary array
+        temp = new int[0];
+    }
+
+    // Otherwise...
+    else
+    {
+
+        temp = new int[size-1];
+
+        // Loop through the array and copy the values
+        for(int i = 0; i < size-1; i++)
+        {
+            temp[i] = array[i];
+        }
+
+        // Reset size
+        size--;
+
+    }
+
+    // Clear out the old array and return new temporary array
+    delete[] array;
+    return temp;
+
+}
+
+// Driver for the AddItem method
+int* removeItemDriver(int* array, int&size)
+{
+
+    // Generic Intro
+    intro("Remove Item");
+    divider();
+    spacing();
+
+    // Run the method, output confirmation, and return new array
+    array = removeItem(array, size);
+    spacing("Operation complete.");
+    spacing();
+
+    return array;
+
+}
+
+// Driver for input, because essentially you're just driving AddItem anyway
+int* inputDriver(int* array, int &size)
+{
+
+    // Initialize Variables
+    int input;
+
+    // Generic Intro
+    intro("Input");
+    divider();
+    spacing();
+
+    // Intro to loop
+    spacing("(Press -1 to exit)");
+    spacing();
+
+    // Begin looping
+    do
+    {
+
+        // Prompt, receive input
+        spacing("Enter a number: ", 2);
+        cin >> input;
+
+        // Provided the input is not -1, we can add it
+        if(input != -1)
+        {
+            array = addItem(array, size, input);
+        }
+
+    }
+    while(input != -1);
+
+    return array;
+
+}
+
+// Tester method, this is only marked off here because I know I'll forget to delete it later
+void display(int* array, int& size)
+{
+    for(int i = 0; i < size; i++)
+    {
+        cout << array[i] << " ";
+    }
+
+    cout << endl;
+
+}
+
+// Main method
+int main()
+{
+
+    // Initialize RNG
+    srand (time(NULL));
+
+    // The array and array size variables we'll be using throughout
+    int size = 0;
+    int* arr = new int[0];
+
+    // Store the input variable
+    int input = -1;
+
+    // Provided the input isn't zero, output the menu
+    while (input != 0)
+    {
+
+        divider();
+        spacing();
+        spacing("TER4M1");
+        spacing("Problem Set 5");
+        spacing("Kai Huang");
+        spacing();
+        divider();
+        spacing();
+        spacing("Pick an option:");
+        spacing("1. Fill");
+        spacing("2. Input");
+        spacing("3. Average");
+        spacing("4. Min");
+        spacing("5. Max");
+        spacing("6. Search");
+        spacing("7. Add Item");
+        spacing("8. Remove Item");
+        spacing("9. Display");
+        spacing();
+        spacing("0. Exit Program");
+        spacing();
+
+        // Read the input
+        cin >> input;
+
+        if (input == 1)
+        {
+            // Call the method for Fill program and then prompt the user to hit any key
+            arr = fillDriver(arr, size);
+            getchSpaced();
+        }
+
+        else if (input == 2)
+        {
+            // Call the method for Input program and then prompt the user to hit any key
+            inputDriver(arr, size);
+            getchSpaced();
+        }
+
+        else if (input == 3)
+        {
+            // Call the method for Average program and then prompt the user to hit any key
+            averageDriver(arr, size);
+            getchSpaced();
+        }
+
+        else if (input == 4)
+        {
+            // Call the method for Min program and then prompt the user to hit any key
+            minDriver(arr, size);
+            getchSpaced();
+        }
+
+        else if (input == 5)
+        {
+            // Call the method for Max program and then prompt the user to hit any key
+            maxDriver(arr, size);
+            getchSpaced();
+        }
+
+        else if (input == 6)
+        {
+            // Call the method for Search program and then prompt the user to hit any key
+            searchDriver(arr, size);
+            getchSpaced();
+        }
+
+        else if (input == 7)
+        {
+            // Call the method for Add Item program and then prompt the user to hit any key
+            arr = addItemDriver(arr, size);
+            getchSpaced();
+        }
+
+        else if (input == 8)
+        {
+            // Call the method for Remove Item program and then prompt the user to hit any key
+            arr = removeItemDriver(arr, size);
+            getchSpaced();
+        }
+
+        else if (input == 9)
+        {
+            // Call the method for Display program and then prompt the user to hit any key
+            display(arr, size);
+            getchSpaced();
+        }
+
+        // If the input entered didn't fall into one of the above categories...
+        // ... and yet is not zero, alert the user of invalidity
+        else if (input != 0)
+        {
+            spacing("Invalid Response.");
+            system("pause");
+        }
+
+            // If it is indeed a zero, then exit
+        else
+        {
+            spacing("Fare thee well.");
+            getchSpaced();
+        }
+
+    }
+
+}
